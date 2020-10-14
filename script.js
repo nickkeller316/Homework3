@@ -127,30 +127,30 @@ function userOptions() {
   //stores user choices in global memory
   return userInput;
 }
-//action password function, using userOptions
+//action password function, using userOptions(userChoice)
 function generatePassword() {
   var userChoice = userOptions();
   var passChoice = [];
   var possChar = [];
   var usedChar = [];
 
-  if (userOptions.useSC === true) {
+  if (userChoice.useSC === true) {
     possChar = possChar.concat(specialCharacters);
     usedChar.push(randomNumber(specialCharacters));
   }
-  if (userOptions.useNum === true) {
+  if (userChoice.useNum === true) {
     possChar = possChar.concat(numberList);
     usedChar.push(randomNumber(numberList));
   }
-  if (userOptions.useUpp === true) {
+  if (userChoice.useUpp === true) {
     possChar = possChar.concat(upperCaseList);
     usedChar.push(randomNumber(upperCaseList));
   }
-  if (userOptions.useLow === true) {
+  if (userChoice.useLow === true) {
     possChar = possChar.concat(lowerCaseList);
     usedChar.push(randomNumber(lowerCaseList));
   }
-  for (let i = 0; i < userOptions.passLength; i++) {
+  for (let i = 0; i < userChoice.passLength; i++) {
     var possChar = randomNumber(usedChar);
     passChoice.push(possChar);
   }
