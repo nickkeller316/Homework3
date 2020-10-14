@@ -102,9 +102,62 @@ function randomNumber(array) {
 }
 //test
 randomNumber(lowerCaseList);
-
+//this function will include the confirms and prompts for password criteria
 function userOptions() {
+  //special characters T/F (boolean) stored in useSC variable
   var useSC = confirm("Will you use any special characters? ");
+  //numbers T/F (boolean) stored in useNUM variable
+  var useNum = confirm("Will you use numbers? ");
+  //upper case T/F (boolean) stored in useUpp variable
+  var useUpp = confirm("Will you use any upper case letters? ");
+  //lower case T/F (boolean) stored in useLow variable
+  var useLow = confirm("Will you use any lower case numbers? ");
+  //passLength (number between 8-128) stored in passLength variable
+  var passLength = prompt(
+    "How long would you like your password to be (8-128 characters)? "
+  );
+  // all the above variables are stored in an object called userInput for use in password generator function
+  var userInput = {
+    useSC: useSC,
+    useNum: useNum,
+    useUpp: useUpp,
+    useLow: useLow,
+    passLength: passLength,
+  };
+  //stores user choices in global memory
+  return userInput;
+}
+//action password function, using userOptions
+function generatePassword() {
+  var userChoice = userOptions();
+  var passChoice = [];
+  var possChar = [];
+  var usedChar = [];
+
+  if (userOptions.useSC === true) {
+    possChar = possChar.concat(specialCharacters);
+    usedChar.push(randomNumber(specialCharacters));
+  }
+  if (userOptions.useNum === true) {
+    possChar = possChar.concat(numberList);
+    usedChar.push(randomNumber(numberList));
+  }
+  if (userOptions.useUpp === true) {
+    possChar = possChar.concat(upperCaseList);
+    usedChar.push(randomNumber(upperCaseList));
+  }
+  if (userOptions.useLow === true) {
+    possChar = possChar.concat(lowerCaseList);
+    usedChar.push(randomNumber(lowerCaseList));
+  }
+  for (let i = 0; i < userOptions.passLength; i++) {
+    var possChar = randomNumber(usedChar);
+    passChoice.push(possChar);
+  }
+  for (let j = 0; j < usedChar.length; j++) {
+    passChoice[j] = randomNumber(usedChar);
+  }
+  return passChoice.join("");
 }
 
 // Write password to the #password input
@@ -113,6 +166,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
+  console.log(password);
 }
 
 // Add event listener to generate button
